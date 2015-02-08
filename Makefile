@@ -1,13 +1,14 @@
-F_CPU = 8000000UL
-BAUD = 9600UL
+# this F_CPU gets carried through into the i2c library also
+F_CPU = 8000000
+BAUD = 38400
 TEST = 0
 MCU = atmega8a
-ISP = usbasp
 AVRDUDE_MCU = atmega8
+ISP = usbasp
 
-CFLAGS += -DF_CPU=$(F_CPU) \
+CFLAGS += -DF_CPU=$(F_CPU)UL \
 		  -DTEST=$(TEST) \
-		  -DBAUD=$(BAUD)\
+		  -DBAUD=$(BAUD)UL \
 		  -mmcu=$(MCU) \
 		  -Wall -Os
 COMPILER = avr-gcc $(CFLAGS)
@@ -29,7 +30,7 @@ clean:
 	cd i2c; $(MAKE) -f makefile.twimaster clean
 
 i2c/twimaster.o:
-	cd i2c; $(MAKE) -f makefile.twimaster
+	cd i2c; $(MAKE) -f makefile.twimaster F_CPU=$(F_CPU) MCU=$(AVRDUDE_MCU)
 
 %.o: %.c
 	$(COMPILER) -o $@ -c $<

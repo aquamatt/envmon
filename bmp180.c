@@ -4,12 +4,16 @@
  * Usage notes:
  * - it is expected that i2c_init() will have been called by the main
  *   programme
- * - TEST must be defined in the Makefile; set to 1 to use datasheet
+ * - TEST can be overridden in the Makefile; set to 1 to use datasheet
  *        example values for coefficients and uncompensated readings
  */
 #include <util/delay.h>
 #include "i2c/i2cmaster.h"
 #include "bmp180.h"
+
+#ifndef TEST
+#define TEST 0
+#endif
 
 // Chip calibration coefficients
 int16_t AC1 = 0;

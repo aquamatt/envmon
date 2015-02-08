@@ -1,7 +1,11 @@
 /******
  * Build notes
- * - F_CPU must be defined in the Makefile
+ * - F_CPU should probably be overridden in Makefile
  */
+#ifndef F_CPU
+#define F_CPU 1000000UL
+#endif
+
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
@@ -47,8 +51,8 @@ int main (void)
 
         if (temperature != last_temperature)
         {
-            flash((uint8_t)(((float)temperature/10.0)+0.5), 2);
             printf("%d\n", temperature);
+            flash((uint8_t)(((float)temperature/10.0)+0.5), 2);
             last_temperature = temperature;
         }
         _delay_ms(1000);

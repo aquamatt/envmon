@@ -1,6 +1,9 @@
 /**********************************
  * Serial comms funcions
  */
+#ifndef F_CPU
+#define F_CPU 1000000UL
+#endif
 #define BAUDRATE ((F_CPU)/(BAUD*16UL)-1)
 
 #include <stdio.h>
