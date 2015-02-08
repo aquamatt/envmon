@@ -1,6 +1,6 @@
 F_CPU = 8000000UL
 BAUD = 9600UL
-TEST = 1
+TEST = 0
 MCU = atmega8a
 ISP = usbasp
 AVRDUDE_MCU = atmega8
@@ -17,29 +17,30 @@ FLOAT_OPTS =  -Wl,-u,vfprintf -lprintf_flt -lm
 HEXER = avr-objcopy -j .text -j .data -O ihex
 AVRDUDE = avrdude -c $(ISP) -p $(AVRDUDE_MCU)
 I2CDEPS = i2c/twimaster.o
-OBJS = \
-	   temp.o \
+OBJS = temp.o \
 	   bmp180.o \
 	   serial.o \
 	   mydisplay.o
-
-LINK_TARGET = temp.hex
 
 all: temp.hex
 
 clean:
 	rm -f *.o *.hex *.elf
+	cd i2c; $(MAKE) -f makefile.twimaster clean
+
+i2c/twimaster.o:
+	cd i2c; $(MAKE) -f makefile.twimaster
 
 %.o: %.c
 	$(COMPILER) -o $@ -c $<
 
-temp.elf: $(OBJS)
+temp.elf: $(OBJS) $(I2CDEPS)
 	$(COMPILER) -o $@ $(OBJS) $(I2CDEPS)
 
 %.hex: %.elf
 	$(HEXER) $< $@
 
-deploy: $(LINK_TARGET)
+deploy: temp.hex
 	sudo $(AVRDUDE) -U flash:w:$<
 
 fuseclock:
