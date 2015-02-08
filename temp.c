@@ -39,21 +39,29 @@ int main (void)
     redirect_stdout();
     verify_bmp();
 
-    uint16_t temperature;
-    uint16_t last_temperature = 0;
+    uint32_t temperature;
+    uint32_t pressure;
+    uint32_t last_temperature = 0;
+    uint32_t last_pressure = 0;
 
     /*****
-     * @TODO: Pressure calculation
      * @TODO: Timing loop for the flash detector
      */
     while(1){
         temperature = get_temp();
+        //pressure = get_pressure(ULTRALOWPOWER);
+        pressure = get_pressure(ULTRAHIGHRES);
 
         if (temperature != last_temperature)
         {
-            printf("%d\n", temperature);
-            flash((uint8_t)(((float)temperature/10.0)+0.5), 2);
+            printf("T=%ld\n", temperature);
+            display((uint8_t)(((float)temperature/10.0)+0.5));
             last_temperature = temperature;
+        }
+        if (pressure != last_pressure)
+        {
+            printf("P=%ld\n", pressure);
+            last_pressure = pressure;
         }
         _delay_ms(1000);
     }

@@ -6,11 +6,13 @@ MCU = atmega8a
 AVRDUDE_MCU = atmega8
 ISP = usbasp
 
+#CFLAGS += -DDEBUG=1
 CFLAGS += -DF_CPU=$(F_CPU)UL \
 		  -DTEST=$(TEST) \
 		  -DBAUD=$(BAUD)UL \
 		  -mmcu=$(MCU) \
 		  -Wall -Os
+
 COMPILER = avr-gcc $(CFLAGS)
 # options required if doing float operations and printing floats. Not
 # recommended if you can avoid it.
@@ -27,6 +29,8 @@ all: temp.hex
 
 clean:
 	rm -f *.o *.hex *.elf
+
+reallyclean: clean
 	cd i2c; $(MAKE) -f makefile.twimaster clean
 
 i2c/twimaster.o:

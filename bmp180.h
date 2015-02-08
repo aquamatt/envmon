@@ -23,6 +23,12 @@
 #define TEMPDATA           0xF6
 #define PRESSUREDATA       0xF6
 
+// Delay constants
+#define MEASURE_FAST    5
+#define MEASURE_STD     8
+#define MEASURE_SLOW    14
+#define MEASURE_ULTRA   26
+
 // Commands
 #define READTEMPCMD        0x2E
 #define READPRESSURECMD    0x34
@@ -30,13 +36,14 @@
 
 uint8_t get_byte(uint8_t host, uint8_t address);
 uint16_t get_word(uint8_t host, uint8_t address);
-uint16_t execute(uint8_t host,
+void execute(uint8_t host,
              uint8_t command_address,
              uint8_t command_value,
-             uint8_t response_address);
+             uint8_t measure_delay);
 uint8_t _test_coefficient(uint16_t c);
 uint8_t set_coefficients(void);
 uint8_t set_test_coefficients(void);
 uint8_t initialise_bmp_module(void);
 uint8_t test_bmp_chip(void);
 int32_t get_temp(void);
+int32_t get_pressure(uint8_t oss);
