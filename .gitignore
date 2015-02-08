@@ -2,3 +2,13 @@
 *.elf
 *.o
 .*.swp
+i2c/*.map
+i2c/.dep
+i2c/*.lst
+i2c/*.d
+i2c/*.eep
+i2c/*.lst
+i2c/*.lss
+i2c/*.sym
+
+

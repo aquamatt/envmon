@@ -16,7 +16,7 @@ COMPILER = avr-gcc $(CFLAGS)
 FLOAT_OPTS =  -Wl,-u,vfprintf -lprintf_flt -lm
 HEXER = avr-objcopy -j .text -j .data -O ihex
 AVRDUDE = avrdude -c $(ISP) -p $(AVRDUDE_MCU)
-I2CDEPS = i2c/i2cmaster.o
+I2CDEPS = i2c/twimaster.o
 OBJS = \
 	   temp.o \
 	   bmp180.o \
