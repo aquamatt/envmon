@@ -1,3 +1,12 @@
+/****
+ * Quick test application that flashes an LEDs on port D to when the
+ * phototransistor is covered/uncovered.
+ *
+ * Photo transistor I use is TEPT5700 biased by a 180K resistor
+ * The voltage at emitter is input to pin PD2 and is high when light present
+ *
+ */
+
 #define F_CPU 8000000UL
 
 #include <avr/io.h>
