@@ -20,12 +20,12 @@ FLOAT_OPTS =  -Wl,-u,vfprintf -lprintf_flt -lm
 HEXER = avr-objcopy -j .text -j .data -O ihex
 AVRDUDE = avrdude -c $(ISP) -p $(AVRDUDE_MCU)
 I2CDEPS = i2c/twimaster.o
-OBJS = temp.o \
+OBJS = sensors.o \
 	   bmp180.o \
 	   serial.o \
 	   mydisplay.o
 
-all: temp.hex
+all: sensors.hex
 
 clean:
 	rm -f *.o *.hex *.elf
@@ -39,13 +39,13 @@ i2c/twimaster.o:
 %.o: %.c
 	$(COMPILER) -o $@ -c $<
 
-temp.elf: $(OBJS) $(I2CDEPS)
+sensors.elf: $(OBJS) $(I2CDEPS)
 	$(COMPILER) -o $@ $(OBJS) $(I2CDEPS)
 
 %.hex: %.elf
 	$(HEXER) $< $@
 
-deploy: temp.hex
+deploy: sensors.hex
 	sudo $(AVRDUDE) -U flash:w:$<
 
 fuseclock:
