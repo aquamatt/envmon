@@ -7,6 +7,7 @@
  */
 void display(uint8_t v) {
    PORTB &= ~LOWER_FIVE;
+   v <<= MYDISPLAY_SHIFT;
    v &= LOWER_FIVE;
    PORTB |= v;
 }
@@ -27,3 +28,7 @@ void flash(uint8_t v, uint8_t count) {
     display(v);
 }
 
+void mydisplay_init(void) {
+    // output LED configuration
+    DDRB = LOWER_FIVE;
+}
