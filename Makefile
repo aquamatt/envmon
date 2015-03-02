@@ -22,7 +22,6 @@ AVRDUDE = avrdude -c $(ISP) -p $(AVRDUDE_MCU)
 I2CDEPS = i2c/twimaster.o
 OBJS = sensors.o \
 	   bmp180.o \
-	   dht22.o \
 	   metroled.o \
 	   serial.o \
 	   mydisplay.o

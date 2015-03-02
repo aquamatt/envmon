@@ -14,6 +14,7 @@
 #include "i2c/i2cmaster.h"
 #include "mydisplay.h"
 #include "bmp180.h"
+#include "metroled.h"
 #include "serial.h"
 
 
